@@ -22,15 +22,15 @@ export class DocumentController {
     async one(request: Request, response: Response, next: NextFunction) {
         const id = parseInt(request.params.id)
 
-        const attribute = await this.documentRepository.findOne({
+        const document = await this.documentRepository.findOne({
             where: { id },
             relations: ["attributes"]
         })
 
-        if (!attribute) {
-            return "unregistered user"
+        if (!document) {
+            return "document with id " + id + " does not exist"
         }
-        return attribute
+        return document
     }
 
     // если необходимо обновить - не указываем documentId, если хотим обновить - указываем
@@ -50,12 +50,12 @@ export class DocumentController {
         const templateAttributesNamesArr = template.attributes.map(i => i.name);
         const missingAttributes = templateAttributesNamesArr.filter(attr => !attributeNamesArr.includes(attr));
         if(missingAttributes.length > 0){
-            return "Пропущены аттрибуты: " + missingAttributes.join(', ');
+            return "Missed attributes: " + missingAttributes.join(', ');
         }
 
         const excessAttributes = attributeNamesArr.filter(attr => !templateAttributesNamesArr.includes(attr));
         if(excessAttributes.length > 0){
-            return "Избыточные аттрибуты: " + excessAttributes.join(', ');
+            return "Excess attributes: " + excessAttributes.join(', ');
         }
 
         let document;

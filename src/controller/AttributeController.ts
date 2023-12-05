@@ -18,7 +18,7 @@ export class AttributeController {
         })
 
         if (!attribute) {
-            return "unregistered user"
+            return "attribute with id " + id  + " does not exits"
         }
         return attribute
     }

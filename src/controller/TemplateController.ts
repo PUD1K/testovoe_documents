@@ -21,7 +21,7 @@ export class TemplateController {
         })
 
         if (!template) {
-            return "unregistered user"
+            return "template with id " + id  + " does not exist"
         }
         return template
     }
